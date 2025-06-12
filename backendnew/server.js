@@ -8,12 +8,12 @@ const cors = require('cors');
 
 const app = express();
 
-// Enable CORS for all origins (you can restrict this if needed)
 app.use(cors({
   origin: [
     'http://localhost:3000',
     'http://localhost:4002',
-    'https://admin-panel-b3lg.onrender.com/flowers'
+    'https://admin-panel-b3lg.onrender.com',
+    'https://flower-delivery-site-2-3.onrender.com' // ✅ Add this!
   ],
   credentials: true
 }));
@@ -41,14 +41,6 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/api/flowers', flowersRouter);
 app.use('/api/users', userRouter);
 
-// Serve React frontend build in production
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../frontend/build')));
-  
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/build/index.html'));
-  });
-}
 
 // Start server
 const PORT = process.env.PORT || 4002;
